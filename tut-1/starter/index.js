@@ -33,14 +33,23 @@ const url = require('url');
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //SERVER
 
+
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
+const dataObject = JSON.parse(data);
+
 const server = http.createServer((req, res) => {
     console.log(req.url)
 
     const pathName = req.url;
-    if (pathName === '/' || pathName === '/overview'){
+    if (pathName === '/' || pathName === '/overview') {
         res.end('this is the OVERVIEW');
-    } else if (pathName === '/product'){
+    } else if (pathName === '/product') {
         res.end('this is the PRODUCT');
+    } else if (pathName === '/api') {
+        res.writeHead(200, {
+            'Content-type': 'application/json'
+        })
+        res.end(data); // data here is taken from the data var at the top as it's inthe callback function and has access to the code higher up
     } else {
         res.writeHead(404, {
             // http header is a piece of into about the response we are sending back and is sent in an object. they should be sent before the response content
@@ -50,7 +59,8 @@ const server = http.createServer((req, res) => {
         res.end('<h1>Page Not Found</h1>')
     }
 
-    res.end('hello from the server')
+    // res.end('hello from the server')
+    // if this was in it would not display the data in the browser... dunno how or why
 });
 
 server.listen(8000, '127.0.0.1', () => {
