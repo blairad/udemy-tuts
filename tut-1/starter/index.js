@@ -38,18 +38,24 @@ const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObject = JSON.parse(data);
 
 const server = http.createServer((req, res) => {
-    console.log(req.url)
-
     const pathName = req.url;
+
+    // Overview Page
     if (pathName === '/' || pathName === '/overview') {
         res.end('this is the OVERVIEW');
+
+    // Product Page
     } else if (pathName === '/product') {
         res.end('this is the PRODUCT');
+
+    // API 
     } else if (pathName === '/api') {
         res.writeHead(200, {
             'Content-type': 'application/json'
         })
         res.end(data); // data here is taken from the data var at the top as it's inthe callback function and has access to the code higher up
+
+    // Not Found
     } else {
         res.writeHead(404, {
             // http header is a piece of into about the response we are sending back and is sent in an object. they should be sent before the response content
