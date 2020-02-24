@@ -35,7 +35,7 @@ const url = require('url');
 
 const replaceTemplate = (temp, product) => {
     let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
-    //product from arg above and .Name taking what is needed from json
+    //product from arg above and prod.Name taking what is needed from json
     //using /***/g as there are multiple of that name and backtics will jsut get the first placeholder
     output = output.replace(/{%IMAGE%}/g, product.image);
     output = output.replace(/{%QUANTITY%}/g, product.quantity);
@@ -55,6 +55,7 @@ const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.htm
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObject = JSON.parse(data);
+console.log(dataObject)
 
 const server = http.createServer((req, res) => {
     const pathName = req.url;
